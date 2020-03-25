@@ -92,42 +92,6 @@
   </footer>
   <script src="assets/js/jquery.js"></script>
   <script src="assets/js/bootstrap.min.js"></script>
-
+  <script src="assets/js/app.js"></script>
 </body>
-
 </html>
-<script>
-  const isMobile = navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i);
-
-  if (isMobile === null) {
-    $('#footer').addClass('fix-footer')
-  }
-
-  fetch("https://covid-19-coronavirus-statistics.p.rapidapi.com/v1/stats?country=Indonesia", {
-    "method": "GET",
-    "headers": {
-      "x-rapidapi-host": "covid-19-coronavirus-statistics.p.rapidapi.com",
-      "x-rapidapi-key": "dcc1f5dea3msh6f73150e9884ac4p10f2dfjsn18ec02bdcf9a"
-    }
-  }).then((response) => {
-       return response.json();
-    })
-  .then(data => {
-    const confirmed = data.data.covid19Stats[0].confirmed;
-    const recovered = data.data.covid19Stats[0].recovered;
-    const deaths = data.data.covid19Stats[0].deaths;
-    const lastChecked = data.data.lastChecked;
-    const lastUpdate = data.data.covid19Stats[0].lastUpdate;
-    const country = data.data.covid19Stats[0].country;
-    const activeCare = confirmed - (recovered + deaths);
-
-    $('#confirmed').html(confirmed);
-    $('#recovered').html(recovered);
-    $('#deaths').html(deaths);
-    $('#lastUpdate').html(lastUpdate);
-    $('#activeCare').html(activeCare);
-  })
-  .catch(err => {
-    console.log(err);
-  });
-</script>
