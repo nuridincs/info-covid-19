@@ -52,6 +52,17 @@
       </div>
 
       <div class="col-lg col-md-6 mb-4">
+        <div class="card bg-info text-white h-100">
+          <div class="card-body">
+            <h4 id="activeCare" class="card-title">
+              <i class="fa fa-spinner"></i>
+            </h4>
+            <p class="card-text">Dalam Perawatan</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg col-md-6 mb-4">
         <div class="card bg-success text-white h-100">
           <div class="card-body">
             <h4 id="recovered" class="card-title">
@@ -74,7 +85,7 @@
       </div>
     </div>
   </div>
-  <footer class="py-5 bg-dark fix-footer">
+  <footer id="footer" class="py-3 bg-dark">
     <div class="container">
       <p class="m-0 text-center text-white">Copyright &copy; Info Covid 19 By <a href="https://jalankluar.com" class="text-white">jalankluar.com</a></p>
     </div>
@@ -86,6 +97,12 @@
 
 </html>
 <script>
+  const isMobile = navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i);
+
+  if (isMobile === null) {
+    $('#footer').addClass('fix-footer')
+  }
+
   fetch("https://covid-19-coronavirus-statistics.p.rapidapi.com/v1/stats?country=Indonesia", {
     "method": "GET",
     "headers": {
@@ -102,11 +119,13 @@
     const lastChecked = data.data.lastChecked;
     const lastUpdate = data.data.covid19Stats[0].lastUpdate;
     const country = data.data.covid19Stats[0].country;
+    const activeCare = confirmed - (recovered + deaths);
 
     $('#confirmed').html(confirmed);
     $('#recovered').html(recovered);
     $('#deaths').html(deaths);
     $('#lastUpdate').html(lastUpdate);
+    $('#activeCare').html(activeCare);
   })
   .catch(err => {
     console.log(err);
