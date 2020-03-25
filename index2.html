@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Info Covid 19</title>
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+
+  <style>
+    body {
+      background-color: #eff3f9;
+    }
+
+    .bg-dark {
+      background-color: #1f2c41 !important;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="jumbotrons my-4">
+      <h1>Info Covid 19</h1>
+      <p>Jumlah Kasus di Indonesia Saat Ini</p>
+      <div>
+        <div>Pembaruan Terakhir</div>
+        <div id="lastUpdate" class="badge badge-danger"></div>
+      </div>
+    </div>
+    <div class="row text-center">
+      <div class="col-lg col-md-6 mb-4">
+        <div class="card bg-warning text-white h-100">
+          <div class="card-body">
+            <h4 id="confirmed" class="card-title">0</h4>
+            <p class="card-text">Terkonfirmasi</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg col-md-6 mb-4">
+        <div class="card bg-success text-white h-100">
+          <div class="card-body">
+            <h4 id="recovered" class="card-title">0</h4>
+            <p class="card-text">Sembuh</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg col-md-6 mb-4">
+        <div class="card bg-danger text-white h-100">
+          <div class="card-body">
+            <h4 id="deaths" class="card-title">0</h4>
+            <p class="card-text">Meninggal</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; Info Covid 19 By <a href="https://jalankluar.com" class="text-white">jalankluar.com</a></p>
+    </div>
+  </footer>
+  <script src="assets/js/jquery.js"></script>
+  <script src="assets/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
+<script>
+  fetch("https://covid-19-coronavirus-statistics.p.rapidapi.com/v1/stats?country=Indonesia", {
+    "method": "GET",
+    "headers": {
+      "x-rapidapi-host": "covid-19-coronavirus-statistics.p.rapidapi.com",
+      "x-rapidapi-key": "dcc1f5dea3msh6f73150e9884ac4p10f2dfjsn18ec02bdcf9a"
+    }
+  }).then((response) => {
+       return response.json();
+    })
+  .then(data => {
+    const confirmed = data.data.covid19Stats[0].confirmed;
+    const recovered = data.data.covid19Stats[0].recovered;
+    const deaths = data.data.covid19Stats[0].deaths;
+    const lastChecked = data.data.lastChecked;
+    const lastUpdate = data.data.covid19Stats[0].lastUpdate;
+    const country = data.data.covid19Stats[0].country;
+
+    $('#confirmed').html(confirmed);
+    $('#recovered').html(recovered);
+    $('#deaths').html(deaths);
+    $('#lastUpdate').html(lastUpdate);
+  })
+  .catch(err => {
+    console.log(err);
+  });
+</script>
